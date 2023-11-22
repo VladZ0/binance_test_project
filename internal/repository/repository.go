@@ -33,10 +33,6 @@ func (r *BinanceRepository) GetPairs(ctx context.Context, count int) ([]string, 
 	}
 
 	if len(pairs.Symbols) < count {
-		return nil, fmt.Errorf("not enough pairs")
-	}
-
-	if len(pairs.Symbols) < count {
 		count = len(pairs.Symbols)
 	}
 
