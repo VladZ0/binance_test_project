@@ -6,7 +6,6 @@ import (
 	"sync"
 	"test_task/internal/repository"
 	"test_task/internal/service"
-	"time"
 
 	"github.com/aiviaio/go-binance/v2"
 )
@@ -42,7 +41,6 @@ func startWorkers(ch chan map[string]string, wg *sync.WaitGroup) {
 	}
 
 	for _, e := range pairs {
-		time.Sleep(time.Second)
 		wg.Add(1)
 		go func(pair string) {
 			price, err := service.GetPrice(context.Background(), pair)

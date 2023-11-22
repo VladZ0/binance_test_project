@@ -3,6 +3,7 @@ package repository
 import (
 	"context"
 	"fmt"
+	"strings"
 
 	"github.com/aiviaio/go-binance/v2"
 	"github.com/aiviaio/go-binance/v2/futures"
@@ -35,7 +36,7 @@ func (r *BinanceRepository) GetPairs(ctx context.Context, count int) ([]string, 
 		return nil, fmt.Errorf("not enough pairs")
 	}
 
-	if len(pairs.Symbols) > count {
+	if len(pairs.Symbols) < count {
 		count = len(pairs.Symbols)
 	}
 
@@ -43,7 +44,7 @@ func (r *BinanceRepository) GetPairs(ctx context.Context, count int) ([]string, 
 
 	i := 0
 	for _, pair := range pairs.Symbols {
-		if pair.IsMarginTradingAllowed {
+		if strings.HasSuffix(pair.Symbol, "USDT") && pair.IsMarginTradingAllowed {
 			strPairs[i] = pair.Symbol
 			i++
 		}
